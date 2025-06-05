@@ -1,0 +1,23 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><title>로컬 GPT 챗봇</title></head>
+<body>
+  <h2>무료 GPT 챗봇</h2>
+  <input id="userInput" placeholder="메시지를 입력하세요" />
+  <button onclick="sendMessage()">보내기</button>
+  <div id="chatArea"></div>
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("userInput").value;
+      const response = await fetch("http://localhost:8000/chat", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input })
+      });
+      const data = await response.json();
+      document.getElementById("chatArea").innerHTML += `<p><b>나:</b> ${input}</p>`;
+      document.getElementById("chatArea").innerHTML += `<p><b>챗봇:</b> ${data.reply}</p>`;
+    }
+  </script>
+</body>
+</html>
